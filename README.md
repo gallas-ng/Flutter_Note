@@ -11,5 +11,5 @@
  -Run the server: node server.js
  -Run the server main (notes_app/lib/server main.dart)
  
- <img source='maxresdefault.jpg'>
+ <img src='maxresdefault.jpg'>
  
