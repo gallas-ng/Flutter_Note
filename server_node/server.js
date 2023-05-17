@@ -71,6 +71,6 @@ app.delete('/notes/:id', (req, res) => {
 });
 
 // Lancement du serveur sur le port 3000
-app.listen(3000, '192.168.43.23', () => {
+app.listen(3000, '127.0.0.1', () => {
   console.log('Serveur démarré sur le port 3000');
 });

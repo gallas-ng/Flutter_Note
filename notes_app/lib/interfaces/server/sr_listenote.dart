@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:notes_app/interfaces/server/sr_addnote.dart';
 import 'package:notes_app/interfaces/server/sr_editnote.dart';
 
 class NotesListScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class _NotesListScreenState extends State<NotesListScreen> {
 
   void _fetchNotes() async {
     final response =
-        await http.get(Uri.parse('http://192.168.43.23:3000/notes'));
+        await http.get(Uri.parse('http://10.0.2.2:3000/notes'));
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
@@ -29,7 +30,7 @@ class _NotesListScreenState extends State<NotesListScreen> {
 
   void _deleteNote(String id) async {
     final response =
-        await http.delete(Uri.parse('http://192.168.43.23:3000/notes/$id'));
+        await http.delete(Uri.parse('http://10.0.2.2:3000/notes/$id'));
 
     if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -150,8 +151,11 @@ class _NotesListScreenState extends State<NotesListScreen> {
               ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/add');
+        onPressed: () async {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddNoteScreen()),
+          );
         },
         child: Icon(Icons.auto_mode_rounded),
         backgroundColor: Colors.amber,

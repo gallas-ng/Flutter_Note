@@ -38,7 +38,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
     };
 
     final response = await http.put(
-      Uri.parse('http://192.168.43.23:3000/notes/${widget.note['id']}'),
+      Uri.parse('http://10.0.2.2:3000/notes/${widget.note['id']}'),
       body: json.encode(updatedNote),
       headers: {'Content-Type': 'application/json'},
     );

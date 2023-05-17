@@ -21,11 +21,11 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
         var headers = {"Content-Type": "application/json"};
         var body = jsonEncode({
           'title': _title,
-          'grade': _grade,
+          'content': _grade,
         });
 
         var response = await http.post(
-          Uri.parse('http://192.168.43.23:3000/notes/add'),
+          Uri.parse('http://10.0.2.2:3000/notes/add'),
           headers: headers,
           body: body,
         );
@@ -35,7 +35,8 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
             SnackBar(content: Text('Note ajoutée')),
           );
 
-          Navigator.pop(context);
+          Navigator.pop(context); 
+          Navigator.pushReplacementNamed(context, '/');
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Erreur: ${response.statusCode}')),
