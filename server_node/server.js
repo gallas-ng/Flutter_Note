@@ -47,6 +47,29 @@ app.post('/notes/add', (req, res) => {
   });
 });
 
+// Route pour mettre à jour une note
+app.put('/notes/:id', (req, res) => {
+  const noteId = req.params.id;
+  const { title, content } = req.body;
+  const sql = 'UPDATE notes SET title = ?, content = ? WHERE id = ?';
+  connection.query(sql, [title, content, noteId], (err, result) => {
+    if (err) throw err;
+    console.log(`Note mise à jour avec l'id ${noteId}`);
+    res.send('Note mise à jour');
+  });
+});
+
+// Route pour supprimer une note
+app.delete('/notes/:id', (req, res) => {
+  const noteId = req.params.id;
+  const sql = 'DELETE FROM notes WHERE id = ?';
+  connection.query(sql, [noteId], (err, result) => {
+    if (err) throw err;
+    console.log(`Note supprimée avec l'id ${noteId}`);
+    res.send('Note supprimée');
+  });
+});
+
 // Lancement du serveur sur le port 3000
 app.listen(3000, '192.168.43.23', () => {
   console.log('Serveur démarré sur le port 3000');

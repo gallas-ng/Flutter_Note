@@ -1,30 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:notes_app/interfaces/add_note.dart';
+import 'package:notes_app/interfaces/firebase/add_note.dart';
+import 'package:notes_app/interfaces/firebase/edit_note.dart';
 
 class Note {
-  // Attribut 
   final String id;
   final String title;
   final double grade;
 
   Note({required this.id, required this.title, required this.grade});
 
-  // recuperer les attributs
   Map<String, dynamic> toMap() {
     return {'title': title, 'grade': grade.toDouble()};
   }
 }
 
-// Interface de la liste des notes
 class NoteListScreen extends StatefulWidget {
   @override
   _NoteListScreenState createState() => _NoteListScreenState();
 }
 
-//Implementation de l'etat
 class _NoteListScreenState extends State<NoteListScreen> {
-  // Instaciation d'une table 'notes' dans firestore 
   final CollectionReference _notesRef =
       FirebaseFirestore.instance.collection('notes');
 
@@ -61,8 +57,9 @@ class _NoteListScreenState extends State<NoteListScreen> {
                       child: ListTile(
                         title: Text(
                           notes[index].title,
-                          style: TextStyle(fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                         ),
                         subtitle: Text(
@@ -73,7 +70,22 @@ class _NoteListScreenState extends State<NoteListScreen> {
                             fontSize: 18,
                           ),
                         ),
-                        onTap: () {},
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            // Supprimer la note
+                            _notesRef.doc(notes[index].id).delete();
+                          },
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  EditNoteScreen(note: notes[index]),
+                            ),
+                          );
+                        },
                       ),
                     );
                   },

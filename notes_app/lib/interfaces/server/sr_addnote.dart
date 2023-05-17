@@ -1,5 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class AddNoteScreen extends StatefulWidget {
   @override
@@ -10,22 +11,36 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   final _formKey = GlobalKey<FormState>();
   late String _title;
   late double _grade;
+  List<String> _titleOptions = ['C++', 'Java', 'flutter', 'C#','Mojo','Php', 'Go'];
 
   void _submitNote() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
       try {
-        await FirebaseFirestore.instance.collection('notes').add({
+        var headers = {"Content-Type": "application/json"};
+        var body = jsonEncode({
           'title': _title,
           'grade': _grade,
         });
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Note ajoutée')),
+        var response = await http.post(
+          Uri.parse('http://192.168.43.23:3000/notes/add'),
+          headers: headers,
+          body: body,
         );
 
-        Navigator.pop(context);
+        if (response.statusCode == 200) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Note ajoutée')),
+          );
+
+          Navigator.pop(context);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Erreur: ${response.statusCode}')),
+          );
+        }
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Erreur: $e')),
@@ -61,21 +76,28 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                 ),
               ),
               SizedBox(height: 9.0),
-              TextFormField(
+              DropdownButtonFormField<String>(
+                items: _titleOptions.map((String option) {
+                  return DropdownMenuItem<String>(
+                    value: option,
+                    child: Text(option),
+                  );
+                }).toList(),
                 decoration: InputDecoration(
-                  hintText: 'Entrez le titre de la note',
                   border: OutlineInputBorder(),
                   filled: true,
                   fillColor: Colors.grey[200],
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Veuillez entrer un titre';
+                    return 'Veuillez sélectionner un titre';
                   }
                   return null;
                 },
-                onSaved: (value) {
-                  _title = value!;
+                onChanged: (value) {
+                  setState(() {
+                    _title = value!;
+                  });
                 },
               ),
               SizedBox(height: 19.0),
@@ -114,12 +136,12 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
               Center(
                 child: ElevatedButton(
                   onPressed: _submitNote,
-                  child: Text('Ajouter'),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                     textStyle: TextStyle(fontSize: 20),
                     backgroundColor: Colors.amber,
                   ),
+                  child: Text('Ajouter'),
                 ),
               ),
             ],
