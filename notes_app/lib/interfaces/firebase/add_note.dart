@@ -9,9 +9,10 @@ class AddNoteScreen extends StatefulWidget {
 class _AddNoteScreenState extends State<AddNoteScreen> {
   final _formKey = GlobalKey<FormState>();
   late String _title;
-  late double _grade;
+  late int _grade;
   List<String> _titleOptions = ['C++', 'Java', 'Flutter', 'C#','Mojo','Php'];
-
+  bool _checkBoxValue = false;
+  String _radioValue = "oui";
   void _submitNote() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -20,6 +21,8 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
         await FirebaseFirestore.instance.collection('notes').add({
           'title': _title,
           'grade': _grade,
+          'isPublic': _radioValue,
+          'userId': 'KCTpnTO7EYYuuE1bIIKW'
         });
 
         ScaffoldMessenger.of(context).showSnackBar(
@@ -108,17 +111,37 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                   if (value == null || value.isEmpty) {
                     return 'Veuillez entrer une note';
                   }
-                  final n = double.tryParse(value);
+                  final n = int.tryParse(value);
                   if (n == null || n < 0 || n > 20) {
                     return 'Veuillez entrer une note valide entre 0 et 20';
                   }
                   return null;
                 },
                 onSaved: (value) {
-                  _grade = double.parse(value!);
+                  _grade = int.parse(value!);
                 },
               ),
               SizedBox(height: 27.0),
+               RadioListTile<String>(
+                title: Text('Public'),
+                value: 'oui',
+                groupValue: _radioValue,
+                onChanged: (String? value) {
+                  setState(() {
+                    _radioValue = value!;
+                  });
+                },
+              ),
+              RadioListTile<String>(
+                title: Text('Privé'),
+                value: 'non',
+                groupValue: _radioValue,
+                onChanged: (String? value) {
+                  setState(() {
+                    _radioValue = value!;
+                  });
+                },
+              ),
               Center(
                 child: ElevatedButton(
                   onPressed: _submitNote,

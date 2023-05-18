@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:notes_app/interfaces/firebase/list_note.dart';
 
+import '../Note.dart';
+
 class EditNoteScreen extends StatefulWidget {
   final Note note;
 
