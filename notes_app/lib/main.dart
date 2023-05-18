@@ -22,6 +22,23 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
+bool _iconBool = false;
+
+IconData _iconLight = Icons.wb_sunny;
+IconData _iconDark = Icons.nights_stay;
+
+ThemeData _lightTheme = ThemeData(
+  primarySwatch: Colors.blue,
+  brightness: Brightness.light,
+);
+
+
+ThemeData _darkTheme = ThemeData(
+  primarySwatch: Colors.red,
+  brightness: Brightness.dark,
+);
+
+
 class _MyAppState extends State<MyApp> {
 
   Environment _currentEnvironment = Environment.firebase;
@@ -42,15 +59,24 @@ class _MyAppState extends State<MyApp> {
     }
 
     return MaterialApp(
+      theme: _iconBool ? _darkTheme : _lightTheme,
       title: 'Notes App',
       home: Scaffold(
         appBar: AppBar(
           title: Text('Notes App (Env = ${_currentEnvironment.name})'),
           actions: [
+             IconButton(
+               icon: Icon(Icons.swap_horizontal_circle_outlined, size: 40,),
+               onPressed: _switchEnvironment,
+             ),
             IconButton(
-              icon: Icon(Icons.swap_horizontal_circle_outlined, size: 40,),
-              onPressed: _switchEnvironment,
-            ),
+            onPressed: () {
+              setState(() {
+                _iconBool = !_iconBool;
+              });
+            },
+            icon: Icon(_iconBool ? _iconDark : _iconLight),
+          ),
           ],
         ),
         body: mainScreen,

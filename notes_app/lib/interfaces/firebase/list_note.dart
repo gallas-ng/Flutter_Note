@@ -20,6 +20,8 @@ class NoteListScreen extends StatefulWidget {
   _NoteListScreenState createState() => _NoteListScreenState();
 }
 
+
+
 class _NoteListScreenState extends State<NoteListScreen> {
   final CollectionReference _notesRef =
       FirebaseFirestore.instance.collection('notes');
