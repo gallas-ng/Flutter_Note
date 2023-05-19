@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:notes_app/interfaces/firebase/list_note.dart';
+import 'package:MY_NOTE_Grp3/interfaces/firebase/list_note.dart';
 
 class EditNoteScreen extends StatefulWidget {
   final Note note;
@@ -68,7 +68,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                   _selectedTitle = newValue!;
                 });
               },
-              items: ['Java', 'C++','Mojo','C#','Flutter','Php']
+              items: ['Java', 'C++', 'Mojo', 'C#', 'Flutter', 'Php']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,

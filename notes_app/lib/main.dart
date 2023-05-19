@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:notes_app/interfaces/firebase/add_note.dart';
-import 'package:notes_app/interfaces/firebase/list_note.dart';
-import 'package:notes_app/interfaces/server/sr_addnote.dart' as ServerAddNote;
-import 'package:notes_app/interfaces/server/sr_listenote.dart' as ServerListNote;
+import 'package:MY_NOTE_Grp3/interfaces/firebase/add_note.dart';
+import 'package:MY_NOTE_Grp3/interfaces/firebase/list_note.dart';
+import 'package:MY_NOTE_Grp3/interfaces/server/sr_addnote.dart'
+    as ServerAddNote;
+import 'package:MY_NOTE_Grp3/interfaces/server/sr_listenote.dart'
+    as ServerListNote;
 
 enum Environment { firebase, server }
 
@@ -23,12 +25,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   Environment _currentEnvironment = Environment.firebase;
 
   void _switchEnvironment() {
     setState(() {
-      _currentEnvironment = _currentEnvironment == Environment.firebase ? Environment.server : Environment.firebase;
+      _currentEnvironment = _currentEnvironment == Environment.firebase
+          ? Environment.server
+          : Environment.firebase;
     });
   }
 
@@ -48,7 +51,10 @@ class _MyAppState extends State<MyApp> {
           title: Text('Notes App (Env = ${_currentEnvironment.name})'),
           actions: [
             IconButton(
-              icon: Icon(Icons.swap_horizontal_circle_outlined, size: 40,),
+              icon: Icon(
+                Icons.swap_horizontal_circle_outlined,
+                size: 40,
+              ),
               onPressed: _switchEnvironment,
             ),
           ],

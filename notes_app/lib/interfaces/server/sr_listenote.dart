@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:notes_app/interfaces/server/sr_addnote.dart';
-import 'package:notes_app/interfaces/server/sr_editnote.dart';
+import 'package:MY_NOTE_Grp3/interfaces/server/sr_addnote.dart';
+import 'package:MY_NOTE_Grp3/interfaces/server/sr_editnote.dart';
 
 class NotesListScreen extends StatefulWidget {
   @override
@@ -13,8 +13,7 @@ class _NotesListScreenState extends State<NotesListScreen> {
   late List<dynamic> _notesList = [];
 
   void _fetchNotes() async {
-    final response =
-        await http.get(Uri.parse('http://10.0.2.2:3000/notes'));
+    final response = await http.get(Uri.parse('http://10.0.2.2:3000/notes'));
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);

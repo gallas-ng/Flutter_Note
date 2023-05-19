@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/interfaces/server/sr_addnote.dart';
-import 'package:notes_app/interfaces/server/sr_listenote.dart';
+import 'package:MY_NOTE_Grp3/interfaces/server/sr_addnote.dart';
+import 'package:MY_NOTE_Grp3/interfaces/server/sr_listenote.dart';
 
 void main() {
   runApp(MyApp());
