@@ -37,6 +37,7 @@ class _NotesListPubState extends State<NotesListPub> {
               grade: data['grade'],
               isPublic: data['isPublic'],
               userID: data['userID'],
+              username: data['username'],
             );
           })
           .where((note) => note.isPublic == 'oui')
@@ -47,9 +48,6 @@ class _NotesListPubState extends State<NotesListPub> {
           : ListView.builder(
               itemCount: notes.length,
               itemBuilder: (BuildContext context, int index) {      
-              if(FirebaseAuth.instance.currentUser != null)
-                _username = FirebaseAuth.instance.currentUser!.displayName;
-
                 return Card(
                   child: ListTile(
                     title: Text(
@@ -71,7 +69,7 @@ class _NotesListPubState extends State<NotesListPub> {
                           ),
                         ),
                         Text(
-                          'Utilisateur: $_username',
+                          'Utilisateur:${notes[index].username}',
                           style: TextStyle(
                             color: Colors.grey[600],
                             fontSize: 16,

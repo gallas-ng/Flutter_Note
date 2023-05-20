@@ -10,6 +10,7 @@ class AddNoteScreen extends StatefulWidget {
 class _AddNoteScreenState extends State<AddNoteScreen> {
   final _formKey = GlobalKey<FormState>();
   late String _title;
+  String? _username = "";
   late int _grade;
   List<String> _titleOptions = ['C++', 'Java', 'Flutter', 'C#','Mojo','Php'];
   bool _checkBoxValue = false;
@@ -19,15 +20,18 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      if(FirebaseAuth.instance.currentUser != null)
+      if(FirebaseAuth.instance.currentUser != null){
         _userID = FirebaseAuth.instance.currentUser!.uid;
+        _username = FirebaseAuth.instance.currentUser!.displayName;
+      }
     
       try {
         await FirebaseFirestore.instance.collection('notes2').add({
           'title': _title,
           'grade': _grade,
           'isPublic': _radioValue,
-          'userID': _userID
+          'userID': _userID,
+          'username': _username,
         });
 
         ScaffoldMessenger.of(context).showSnackBar(

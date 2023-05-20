@@ -4,8 +4,9 @@ class Note {
   final int grade;
   final String isPublic;
   final String? userID;
+  final String? username;
 
-  Note({required this.id, required this.title, required this.grade, required this.isPublic, this.userID});
+  Note({required this.id, required this.title, required this.grade, required this.isPublic, this.userID, this.username});
 
   Map<String, dynamic> toMap() {
     return {'title': title, 'grade': grade};

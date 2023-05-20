@@ -77,12 +77,7 @@ class _NoteListScreenState extends State<NoteListScreen> {
             );
           })
           .where((note) => note.isPublic == 'non' && note.userID == _userID)
-          .toList();
-
-          notes.forEach((song) {                
-          print(song.userID );                 // This will not have an error, however it's verbose
-          print(song.isPublic);                 // This will not have an error, however it's verbose
-});
+          .toList();            // This will not have an error, however it's verbose
 
             return notes.length == 0
                 ? Center(child: Text('Aucune note trouvée'))
@@ -90,13 +85,13 @@ class _NoteListScreenState extends State<NoteListScreen> {
                     itemCount: notes.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Card(
-                        color: Colors.lightBlue,
+                        // color: Colors.lightBlue,
                         child: ListTile(
                           title: Text(
                             notes[index].title,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              // color: Colors.white,
                               fontSize: 23,
                             ),
                           ),
@@ -106,22 +101,22 @@ class _NoteListScreenState extends State<NoteListScreen> {
                               Text(
                                 'Note: ${notes[index].grade}/20',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  // color: Colors.black,
                                   fontSize: 18,
                                 ),
                               ),
                               Divider(
                                 // Ajout de la ligne horizontale
-                                color: Colors.white,
+                                // color: Colors.white,
                                 thickness: 1.5,
                                 height: 20,
                                 indent: 0,
                                 endIndent: 0,
                               ),
                               Text(
-                                'appréciation: ${notes[index].getAppreciation()}',
+                                'Appréciation: ${notes[index].getAppreciation()}',
                                 style: TextStyle(
-                                  color: Colors.yellow,
+                                  color: Colors.amber,
                                   // decoration: TextDecoration.underline,
                                   fontWeight: FontWeight.bold,
                                 ),
