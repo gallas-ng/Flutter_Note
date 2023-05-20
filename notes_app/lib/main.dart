@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutterfire_ui/auth.dart';
 import 'firebase_options.dart';
 import 'package:MY_NOTE_Grp3/interfaces/firebase/add_note.dart';
 import 'package:MY_NOTE_Grp3/interfaces/firebase/list_note.dart';
@@ -10,14 +11,14 @@ import 'package:MY_NOTE_Grp3/interfaces/server/sr_listenote.dart'
 
 enum Environment { firebase, server }
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions.currentPlatform,
+//   );
 
-  runApp(MyApp());
-}
+//   runApp(MyApp());
+// }
 
 class MyApp extends StatefulWidget {
   @override
@@ -97,10 +98,37 @@ Le thème sombre est défini avec le paramètre brightness ayant la valeur Brigh
           title: Text('Notes App (Env = ${_currentEnvironment.name})'),
           actions: [
             IconButton(
-              icon: Icon(
-                Icons.swap_horizontal_circle_outlined,
-                size: 40,
-              ),
+              icon: const Icon(Icons.person),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<ProfileScreen>(
+                    builder: (context) => ProfileScreen(
+                      appBar: AppBar(
+                        title: const Text('User Profile'),
+                      ),
+                      actions: [
+                        SignedOutAction((context) {
+                          Navigator.of(context).pop();
+                        })
+                      ],
+                      children: [
+                        const Divider(),
+                        Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: Image.asset('assets/flutterfire_300x.png'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.swap_horizontal_circle_outlined, size: 40,),
               onPressed: _switchEnvironment,
             ),
             IconButton(
@@ -123,4 +151,4 @@ Le thème sombre est défini avec le paramètre brightness ayant la valeur Brigh
       ),
     );
   }
-}
+} 

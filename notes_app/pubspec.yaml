@@ -40,10 +40,14 @@ dependencies:
   http: ^0.13.5
   provider: ^6.0.5
   flutter_native_splash: ^2.3.0
+  firebase_auth: ^4.6.1
+  flutterfire_ui: ^0.4.3+20
 
 flutter_native_splash:
     # background_image: "images/ma.png"
       color: blue,
+firebase_auth: ^4.6.1
+flutterfire_ui: ^0.4.3+20
 
 dev_dependencies:
   flutter_test:
@@ -64,17 +68,12 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - images/
+    - assets/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   # uses-material-design: true
-
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
