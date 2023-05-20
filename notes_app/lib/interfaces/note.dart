@@ -3,9 +3,9 @@ class Note {
   final String title;
   final int grade;
   final String isPublic;
-  final String userID;
+  final String? userID;
 
-  Note({required this.id, required this.title, required this.grade, required this.isPublic, required this.userID});
+  Note({required this.id, required this.title, required this.grade, required this.isPublic, this.userID});
 
   Map<String, dynamic> toMap() {
     return {'title': title, 'grade': grade};
@@ -13,13 +13,13 @@ class Note {
 
     String getAppreciation() {
     if (grade <= 5) {
-      return 'MEDRIOCRE';
+      return 'MEDIOCRE';
     } else if (grade <= 9) {
       return 'FAIBLE';
     } else if (grade <= 11) {
       return 'MOYEN';
     } else if (grade <= 14) {
-      return 'PaASSABLE';
+      return 'PASSABLE';
     } else if (grade <= 16) {
       return 'BIEN';
     } else if (grade <= 19) {

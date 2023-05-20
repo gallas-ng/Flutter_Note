@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Note.dart';
 import 'list_note.dart';
@@ -12,6 +13,7 @@ class NotesListPub extends StatefulWidget {
 
 class _NotesListPubState extends State<NotesListPub> {
   final CollectionReference _notesRef = FirebaseFirestore.instance.collection('notes2');
+  String? _username = "Nom non renseigné"; 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +46,10 @@ class _NotesListPubState extends State<NotesListPub> {
           ? Center(child: Text('Aucune note trouvée !'))
           : ListView.builder(
               itemCount: notes.length,
-              itemBuilder: (BuildContext context, int index) {
+              itemBuilder: (BuildContext context, int index) {      
+              if(FirebaseAuth.instance.currentUser != null)
+                _username = FirebaseAuth.instance.currentUser!.displayName;
+
                 return Card(
                   child: ListTile(
                     title: Text(
@@ -65,31 +70,12 @@ class _NotesListPubState extends State<NotesListPub> {
                             fontSize: 18,
                           ),
                         ),
-                        FutureBuilder<DocumentSnapshot>(
-                          future: FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(notes[index].userID)
-                              .get(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<DocumentSnapshot> snapshot) {
-                            if (snapshot.connectionState == ConnectionState.waiting) 
-                              return CircularProgressIndicator();
-                            if (snapshot.hasError) 
-                              return Text('Erreur de chargement des données');
-                            if (!snapshot.hasData) 
-                              return Text('Utilisateur non trouvé');
-                            
-                            String userName =
-                                snapshot.data!.get('prenom') + " " + snapshot.data!.get('nom') as String? ?? '';
-
-                            return Text(
-                              'Utilisateur: $userName',
-                              style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 16,
-                              ),
-                            );
-                          },
+                        Text(
+                          'Utilisateur: $_username',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 16,
+                          ),
                         ),
                       ],
                     ),
@@ -101,6 +87,8 @@ class _NotesListPubState extends State<NotesListPub> {
       ),
     );
   }
+
+  
 }
 
         

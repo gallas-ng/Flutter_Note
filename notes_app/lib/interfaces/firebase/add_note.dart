@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddNoteScreen extends StatefulWidget {
@@ -13,16 +14,20 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   List<String> _titleOptions = ['C++', 'Java', 'Flutter', 'C#','Mojo','Php'];
   bool _checkBoxValue = false;
   String _radioValue = "oui";
+  String _userID = "";
   void _submitNote() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
+      if(FirebaseAuth.instance.currentUser != null)
+        _userID = FirebaseAuth.instance.currentUser!.uid;
+    
       try {
-        await FirebaseFirestore.instance.collection('notes').add({
+        await FirebaseFirestore.instance.collection('notes2').add({
           'title': _title,
           'grade': _grade,
           'isPublic': _radioValue,
-          'userId': 'KCTpnTO7EYYuuE1bIIKW'
+          'userID': _userID
         });
 
         ScaffoldMessenger.of(context).showSnackBar(

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:MY_NOTE_Grp3/interfaces/firebase/add_note.dart';
@@ -15,11 +16,16 @@ class NoteListScreen extends StatefulWidget {
 
 class _NoteListScreenState extends State<NoteListScreen> {
   final CollectionReference _notesRef = FirebaseFirestore.instance.collection('notes2');
+  String _userID = "";
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
+
+    if(FirebaseAuth.instance.currentUser != null)
+      _userID = FirebaseAuth.instance.currentUser!.uid;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -70,8 +76,13 @@ class _NoteListScreenState extends State<NoteListScreen> {
               userID: data['userID'],
             );
           })
-          .where((note) => note.isPublic == 'non')
+          .where((note) => note.isPublic == 'non' && note.userID == _userID)
           .toList();
+
+          notes.forEach((song) {                
+          print(song.userID );                 // This will not have an error, however it's verbose
+          print(song.isPublic);                 // This will not have an error, however it's verbose
+});
 
             return notes.length == 0
                 ? Center(child: Text('Aucune note trouvée'))
