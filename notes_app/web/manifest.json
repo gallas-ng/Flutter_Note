@@ -1,6 +1,6 @@
 {
-    "name": "notes_app",
-    "short_name": "notes_app",
+    "name": "MY_NOTE_Grp3",
+    "short_name": "MY_NOTE_Grp3",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

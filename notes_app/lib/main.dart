@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:notes_app/interfaces/firebase/add_note.dart';
-import 'package:notes_app/interfaces/firebase/list_note.dart';
-import 'package:notes_app/interfaces/server/sr_addnote.dart' as ServerAddNote;
-import 'package:notes_app/interfaces/server/sr_listenote.dart'
+import 'package:MY_NOTE_Grp3/interfaces/firebase/add_note.dart';
+import 'package:MY_NOTE_Grp3/interfaces/firebase/list_note.dart';
+import 'package:MY_NOTE_Grp3/interfaces/server/sr_addnote.dart'
+    as ServerAddNote;
+import 'package:MY_NOTE_Grp3/interfaces/server/sr_listenote.dart'
     as ServerListNote;
 
 enum Environment { firebase, server }

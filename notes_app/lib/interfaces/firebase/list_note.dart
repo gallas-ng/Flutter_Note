@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:notes_app/interfaces/firebase/add_note.dart';
-import 'package:notes_app/interfaces/firebase/edit_note.dart';
+import 'package:flutter/services.dart';
+import 'package:MY_NOTE_Grp3/interfaces/firebase/add_note.dart';
+import 'package:MY_NOTE_Grp3/interfaces/firebase/edit_note.dart';
+
 import '../Note.dart';
 import 'list_note_pub.dart';
 class NoteListScreen extends StatefulWidget {
@@ -15,7 +17,12 @@ class _NoteListScreenState extends State<NoteListScreen> {
   final CollectionReference _notesRef = FirebaseFirestore.instance.collection('notes2');
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
+
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text('Mes notes'),
         backgroundColor: Colors.amber,
@@ -38,12 +45,20 @@ class _NoteListScreenState extends State<NoteListScreen> {
           },),
         ],
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: _notesRef.snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
-          }
+      body: Container(
+        decoration: BoxDecoration(
+          // image: DecorationImage(
+          //   image: AssetImage("images/cr.jpeg"),
+          //   fit: BoxFit.cover,
+          // ),
+        ),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: _notesRef.snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
 
           List<Note> notes = snapshot.data!.docs.map((doc) {
             Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
@@ -58,49 +73,76 @@ class _NoteListScreenState extends State<NoteListScreen> {
           .where((note) => note.isPublic == 'non')
           .toList();
 
-          return notes.length == 0
-              ? Center(child: Text('Aucune note trouvée'))
-              : ListView.builder(
-                  itemCount: notes.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      child: ListTile(
-                        title: Text(
-                          notes[index].title,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+            return notes.length == 0
+                ? Center(child: Text('Aucune note trouvée'))
+                : ListView.builder(
+                    itemCount: notes.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Card(
+                        color: Colors.lightBlue,
+                        child: ListTile(
+                          title: Text(
+                            notes[index].title,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 23,
+                            ),
                           ),
-                        ),
-                        subtitle: Text(
-                          'Note: ${notes[index].grade}/20',
-                          style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: Colors.grey[600],
-                            fontSize: 18,
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Note: ${notes[index].grade}/20',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              Divider(
+                                // Ajout de la ligne horizontale
+                                color: Colors.white,
+                                thickness: 1.5,
+                                height: 20,
+                                indent: 0,
+                                endIndent: 0,
+                              ),
+                              Text(
+                                'appréciation: ${notes[index].getAppreciation()}',
+                                style: TextStyle(
+                                  color: Colors.yellow,
+                                  // decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            // Supprimer la note
-                            _notesRef.doc(notes[index].id).delete();
+                          trailing: IconButton(
+                            icon: Icon(
+                              Icons.delete,
+                              size: 25,
+                              color: Colors.red,
+                            ),
+                            onPressed: () {
+                              // Supprimer la note
+                              _notesRef.doc(notes[index].id).delete();
+                            },
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    EditNoteScreen(note: notes[index]),
+                              ),
+                            );
                           },
                         ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  EditNoteScreen(note: notes[index]),
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                );
-        },
+                      );
+                    },
+                  );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {

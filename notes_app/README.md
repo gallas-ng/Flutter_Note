@@ -1,4 +1,4 @@
-# notes_app
+# MY_NOTE_Grp3
 
 A new Flutter project.
 

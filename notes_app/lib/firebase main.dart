@@ -1,16 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:notes_app/interfaces/firebase/add_note.dart';
-import 'package:notes_app/interfaces/firebase/list_note.dart';
+import 'package:MY_NOTE_Grp3/interfaces/firebase/add_note.dart';
+import 'package:MY_NOTE_Grp3/interfaces/firebase/list_note.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
+    options: DefaultFirebaseOptions.currentPlatform,
   );
-  // 
-  
+  //
+
   runApp(MyApp());
 }
 
