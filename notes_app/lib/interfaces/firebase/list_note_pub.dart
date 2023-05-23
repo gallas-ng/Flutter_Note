@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Note.dart';
 
@@ -11,6 +12,7 @@ class NotesListPub extends StatefulWidget {
 
 class _NotesListPubState extends State<NotesListPub> {
   final CollectionReference _notesRef = FirebaseFirestore.instance.collection('notes2');
+  String? _user = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +46,8 @@ class _NotesListPubState extends State<NotesListPub> {
           ? Center(child: Text('Aucune note trouvée !'))
           : ListView.builder(
               itemCount: notes.length,
-              itemBuilder: (BuildContext context, int index) {      
+              itemBuilder: (BuildContext context, int index) {  
+              _user = FirebaseAuth.instance.currentUser!.uid == notes[index].userID ? "moi" : notes[index].username;
                 return Card(
                   child: ListTile(
                     title: Text(
@@ -66,7 +69,7 @@ class _NotesListPubState extends State<NotesListPub> {
                           ),
                         ),
                         Text(
-                          'Utilisateur:${notes[index].username}',
+                          'Utilisateur: ${_user}',
                           style: TextStyle(
                             color: Colors.grey[600],
                             fontSize: 16,
