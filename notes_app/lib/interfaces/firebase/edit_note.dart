@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:MY_NOTE_Grp3/interfaces/firebase/list_note.dart';
 
 import '../Note.dart';
 

@@ -166,10 +166,10 @@ class _NoteListScreenState extends State<NoteListScreen> {
 
   
   void _showModalDialog(BuildContext context) async {
-    int _nbDonneesPub = await getTotalCountFilteredByValue("notes2", "isPublic", "non");
-    int _nbDonneesPriv = await getTotalCountFilteredByValue("notes2", "isPublic", "oui");
-    double moyennePub = (_nbDonneesPub  / (_nbDonneesPub + _nbDonneesPriv)) * 100;
-    double moyennePriv = (_nbDonneesPriv  / (_nbDonneesPub + _nbDonneesPriv)) * 100;
+    int _nbDonneesPub = await getTotalCountFilteredByValue("notes2", "isPublic", "oui");
+    int _nbDonneesPriv = await getTotalCountFilteredByValue("notes2", "isPublic", "non");
+    double moyennePub = ((_nbDonneesPub  / (_nbDonneesPub + _nbDonneesPriv)) * 100).roundToDouble();
+    double moyennePriv = ((_nbDonneesPriv  / (_nbDonneesPub + _nbDonneesPriv)) * 100).roundToDouble();
     List<String> moyennes = ['Nombre de données publiques', 'Nombre de données privées', 'Moyenne publique', 'Moyenne privée'];
     List<dynamic> valeurs = [_nbDonneesPub, _nbDonneesPriv, moyennePub, moyennePriv];
     

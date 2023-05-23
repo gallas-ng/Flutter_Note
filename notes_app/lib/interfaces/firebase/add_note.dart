@@ -13,7 +13,6 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   String? _username = "";
   late int _grade;
   List<String> _titleOptions = ['C++', 'Java', 'Flutter', 'C#','Mojo','Php'];
-  bool _checkBoxValue = false;
   String _radioValue = "oui";
   String _userID = "";
   void _submitNote() async {

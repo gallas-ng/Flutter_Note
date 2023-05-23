@@ -1,11 +1,7 @@
+import 'package:MY_NOTE_Grp3/auth_gate.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutterfire_ui/auth.dart';
-import 'firebase_options.dart';
-import 'package:MY_NOTE_Grp3/interfaces/firebase/add_note.dart';
 import 'package:MY_NOTE_Grp3/interfaces/firebase/list_note.dart';
-import 'package:MY_NOTE_Grp3/interfaces/server/sr_addnote.dart'
-    as ServerAddNote;
 import 'package:MY_NOTE_Grp3/interfaces/server/sr_listenote.dart'
     as ServerListNote;
 
@@ -105,22 +101,15 @@ Le thème sombre est défini avec le paramètre brightness ayant la valeur Brigh
                   MaterialPageRoute<ProfileScreen>(
                     builder: (context) => ProfileScreen(
                       appBar: AppBar(
-                        title: const Text('User Profile'),
+                        title: const Text('Profil'),
                       ),
                       actions: [
-                        SignedOutAction((context) {
-                          Navigator.of(context).pop();
+                         SignedOutAction((context) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => AuthGate()),
+                          );
                         })
-                      ],
-                      children: [
-                        const Divider(),
-                        Padding(
-                          padding: const EdgeInsets.all(2),
-                          child: AspectRatio(
-                            aspectRatio: 1,
-                            child: Image.asset('assets/flutterfire_300x.png'),
-                          ),
-                        ),
                       ],
                     ),
                   ),

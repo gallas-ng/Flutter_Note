@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Note.dart';
-import 'list_note.dart';
 
 class NotesListPub extends StatefulWidget {
   const NotesListPub({super.key});
@@ -13,7 +11,6 @@ class NotesListPub extends StatefulWidget {
 
 class _NotesListPubState extends State<NotesListPub> {
   final CollectionReference _notesRef = FirebaseFirestore.instance.collection('notes2');
-  String? _username = "Nom non renseigné"; 
   @override
   Widget build(BuildContext context) {
     return Scaffold(

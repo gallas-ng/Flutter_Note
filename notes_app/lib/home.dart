@@ -37,11 +37,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 MaterialPageRoute<ProfileScreen>(
                   builder: (context) => ProfileScreen(
                     appBar: AppBar(
-                      title: const Text('User Profile'),
+                      title: const Text('Profil'),
                     ),
                     actions: [
                       SignedOutAction((context) {
-                        Navigator.of(context).pop();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyApp()),
+                        );
                       })
                     ],
                     children: [
