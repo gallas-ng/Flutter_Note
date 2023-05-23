@@ -47,16 +47,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       })
                     ],
-                    children: [
-                      const Divider(),
-                      Padding(
-                        padding: const EdgeInsets.all(2),
-                        child: AspectRatio(
-                          aspectRatio: 1,
-                          child: Image.asset('assets/flutterfire_300x.png'),
-                        ),
-                      ),
-                    ],
+                    // children: [
+                    //   const Divider(),
+                    //   Padding(
+                    //     padding: const EdgeInsets.all(2),
+                    //     child: AspectRatio(
+                    //       aspectRatio: 1,
+                    //       // child: Image.asset('assets/flutterfire_300x.png'),
+                    //     ),
+                    //   ),
+                    // ],
                   ),
                 ),
               );
